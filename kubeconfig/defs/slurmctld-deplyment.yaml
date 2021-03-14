@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slurmctld-deployment
+  labels:
+    app: slurmctld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slurmctld
+  template:
+    metadata:
+      labels:
+        app: slurmctld
+    spec:
+      hostname: slurm
+      containers:
+      #
+      # The slurmctld container
+      #
+      - name: slurmctld
+        image: 10.43.252.82:5000/slurmctld
+        #command: ['/sbin/init']
+        ports:
+        - containerPort: 6817
+        volumeMounts:
+        - name: slurm-conf
+          mountPath: "/etc/slurm/"
+          readOnly: true
+        - name: run-munge
+          mountPath: "/run/munge"
+      #
+      # The munge container
+      #
+      - name: munge
+        image: 10.43.252.82:5000/munge
+        #command: ['/sbin/init']
+        volumeMounts:
+        - name: munge-key
+          mountPath: "/data/munge/"
+          readOnly: true
+        - name: run-munge
+          mountPath: "/run/munge"
+      volumes:
+      - name: slurm-conf
+        configMap:
+          name: slurm-conf
+      - name: munge-key
+        secret:
+          secretName: munge-key
+          defaultMode: 0400
+      - name: run-munge
+        emptyDir: {}

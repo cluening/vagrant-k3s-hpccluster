@@ -11,22 +11,23 @@ Vagrant.configure("2") do |config|
     v.cpus = 1
   end
 
-  config.vm.define "s1" do |s1|
-    s1.vm.box = "generic/centos8"
-    s1.vm.hostname = "s1"
-    s1.vm.network :private_network, ip: "10.0.0.11"
+  config.vm.define "head" do |head|
+    head.vm.box = "generic/centos8"
+    head.vm.hostname = "head"
+    head.vm.network :private_network, ip: "192.168.100.2"
+    head.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
   end
 
-  config.vm.define "s2" do |s2|
-    s2.vm.box = "generic/centos8"
-    s2.vm.hostname = "s2"
-    s2.vm.network :private_network, ip: "10.0.0.12"
+  config.vm.define "fe1" do |fe1|
+    fe1.vm.box = "generic/centos8"
+    fe1.vm.hostname = "fe1"
+    fe1.vm.network :private_network, ip: "192.168.100.20"
   end
 
-  config.vm.define "s3" do |s3|
-    s3.vm.box = "generic/centos8"
-    s3.vm.hostname = "s3"
-    s3.vm.network :private_network, ip: "10.0.0.13"
+  config.vm.define "node01" do |node01|
+    node01.vm.box = "generic/centos8"
+    node01.vm.hostname = "node01"
+    node01.vm.network :private_network, ip: "192.168.100.101"
   end
 
   ## If proxy environment variables are set, pass them in
