@@ -20,7 +20,7 @@ spec:
       # The slurmctld container
       #
       - name: slurmctld
-        image: 10.43.252.82:5000/slurmctld
+        image: 192.168.100.2:5000/slurmctld
         #command: ['/sbin/init']
         ports:
         - containerPort: 6817
@@ -34,7 +34,7 @@ spec:
       # The munge container
       #
       - name: munge
-        image: 10.43.252.82:5000/munge
+        image: 192.168.100.2:5000/munge
         #command: ['/sbin/init']
         volumeMounts:
         - name: munge-key
