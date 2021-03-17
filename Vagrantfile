@@ -30,6 +30,8 @@ Vagrant.configure("2") do |config|
     node01.vm.network :private_network, ip: "192.168.100.101"
   end
 
+  config.vm.provision "shell", path: "provision.sh"
+ 
   ## If proxy environment variables are set, pass them in
   if Vagrant.has_plugin?("vagrant-proxyconf")
     config.proxy.http     = ENV["http_proxy"]
