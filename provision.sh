@@ -49,7 +49,7 @@ buildah push --tls-verify=false localhost/munge 192.168.100.2:5000/munge
 systemctl enable munge
 systemctl start munge
 
-# Create the slurmctld container and service
+# Create the slurmctld deployment and service
 /usr/local/bin/kubectl apply -f /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/slurmctld-deployment.yaml
 /usr/local/bin/kubectl apply -f /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/slurmctld-service.yaml
 
@@ -57,3 +57,14 @@ systemctl start munge
 mkdir -p /etc/slurm
 cp /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/slurmconfig/slurm.conf /etc/slurm/
 echo "192.168.100.2 slurm" >> /etc/hosts
+
+# Build the chrony image
+buildah build-using-dockerfile -t chrony /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/chronycontainer/
+buildah push --tls-verify=false localhost/chrony 192.168.100.2:5000/chrony
+
+# Create the chrony.conf configmap
+kubectl create configmap chrony-conf --from-file /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/chronyconfig/chrony.conf
+
+# Create the chronyd deployment and service
+/usr/local/bin/kubectl apply -f /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/chronyd-deployment.yaml
+/usr/local/bin/kubectl apply -f /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/chronyd-service.yaml
