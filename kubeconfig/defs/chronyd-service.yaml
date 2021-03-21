@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chronyd-service
+spec:
+  selector:
+    app: chronyd
+  ports:
+    - protocol: UDP
+      port: 123
+  type: LoadBalancer

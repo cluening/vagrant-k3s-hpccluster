@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chronyd
+  labels:
+    app: chronyd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chronyd
+  template:
+    metadata:
+      labels:
+        app: chronyd
+    spec:
+      containers:
+      - name: chronyd
+        image: 192.168.100.2:5000/chrony
+        ports:
+        - containerPort: 123
+          protocol: UDP
+        volumeMounts:
+        - name: chrony-conf
+          mountPath: "/etc/chrony.conf"
+          subPath: "chrony.conf"
+          readOnly: true
+        securityContext:
+          capabilities:
+            add: ["SYS_TIME"]
+      volumes:
+      - name: chrony-conf
+        configMap:
+          name: chrony-conf
