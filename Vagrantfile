@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
     head.vm.hostname = "head"
     head.vm.network :private_network, ip: "192.168.100.2"
     head.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
+    head.vm.provision "shell", path: "provision.sh"
   end
 
   config.vm.define "fe1" do |fe1|
@@ -30,8 +31,6 @@ Vagrant.configure("2") do |config|
     node01.vm.network :private_network, ip: "192.168.100.101"
   end
 
-  config.vm.provision "shell", path: "provision.sh"
- 
   ## If proxy environment variables are set, pass them in
   if Vagrant.has_plugin?("vagrant-proxyconf")
     config.proxy.http     = ENV["http_proxy"]
