@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
     fe1.vm.network :private_network, ip: "192.168.100.20"
   end
 
-  (0..4).each do |i|
+  (1..4).each do |i|
     config.vm.define "node0#{i}" do |node|
       node.vm.box = "generic/centos8"
       node.vm.hostname = "node0#{i}"
