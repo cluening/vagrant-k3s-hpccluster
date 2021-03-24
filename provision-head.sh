@@ -13,7 +13,7 @@ systemctl stop firewalld
 
 # Put the local registry config in place
 mkdir -p /etc/rancher/k3s
-cp /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/configfiles/etc/rancher/k3s/registries.yaml /etc/rancher/k3s/ 
+cp /home/vagrant/vagrant-k3s-hpccluster/configfiles/etc/rancher/k3s/registries.yaml /etc/rancher/k3s/ 
 
 # Install k3s
 curl -L https://get.k3s.io/ -o /root/k3sinstall.sh
