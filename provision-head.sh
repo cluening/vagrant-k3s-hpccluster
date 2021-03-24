@@ -70,6 +70,10 @@ systemctl start munge
 mkdir -p /etc/slurm
 cp /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/slurmconfig/slurm.conf /etc/slurm/
 echo "192.168.100.2 slurm" >> /etc/hosts
+echo "192.168.100.101	node01" >> /etc/hosts
+echo "192.168.100.102	node02" >> /etc/hosts
+echo "192.168.100.103	node03" >> /etc/hosts
+echo "192.168.100.104	node04" >> /etc/hosts
 
 # Build the chrony image
 buildah build-using-dockerfile -t chrony /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/chronycontainer/

@@ -19,6 +19,15 @@ spec:
       - ip: "192.168.100.101"
         hostnames:
         - "node01"
+      - ip: "192.168.100.102"
+        hostnames:
+        - "node02"
+      - ip: "192.168.100.103"
+        hostnames:
+        - "node03"
+      - ip: "192.168.100.104"
+        hostnames:
+        - "node04"
       containers:
       #
       # The slurmctld container
