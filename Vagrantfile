@@ -29,6 +29,8 @@ Vagrant.configure("2") do |config|
     node01.vm.box = "generic/centos8"
     node01.vm.hostname = "node01"
     node01.vm.network :private_network, ip: "192.168.100.101"
+    node01.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
+    node01.vm.provision "shell", path: "provision-node.sh"
   end
 
   ## If proxy environment variables are set, pass them in
