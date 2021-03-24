@@ -1,3 +1,5 @@
+#!/bin/bash
+
 yum install -y http://repos.openhpc.community/OpenHPC/2/CentOS_8/x86_64/ohpc-release-2-1.el8.x86_64.rpm
 yum install -y ansible buildah jq
 yum install -y munge slurm-ohpc
