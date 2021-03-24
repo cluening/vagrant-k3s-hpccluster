@@ -70,7 +70,7 @@ buildah build-using-dockerfile -t chrony /home/vagrant/vagrant-k3s-hpccluster/ku
 buildah push --tls-verify=false localhost/chrony 192.168.100.2:5000/chrony
 
 # Create the chrony.conf configmap
-kubectl create configmap chrony-conf --from-file /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/chronyconfig/chrony.conf
+/usr/local/bin/kubectl create configmap chrony-conf --from-file /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/chronyconfig/chrony.conf
 
 # Create the chronyd deployment and service
 /usr/local/bin/kubectl apply -f /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/chronyd-deployment.yaml
