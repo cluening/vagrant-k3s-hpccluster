@@ -2,6 +2,13 @@ yum install -y http://repos.openhpc.community/OpenHPC/2/CentOS_8/x86_64/ohpc-rel
 yum install -y ansible buildah jq
 yum install -y munge slurm-ohpc
 
+# Disable and stop the firewall
+# FIXME: something in the default firewall config is blocking traffic from
+# inside pods (slurmctld, for example) to things running on nodes (slurmd
+# port 6818, for example).  This needs some debugging
+systemctl disable firewalld
+systemctl stop firewalld
+
 # Put the local registry config in place
 mkdir -p /etc/rancher/k3s
 cp /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/configfiles/etc/rancher/k3s/registries.yaml /etc/rancher/k3s/ 

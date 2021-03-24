@@ -15,6 +15,10 @@ spec:
         app: slurmctld
     spec:
       hostname: slurm
+      hostAliases:
+      - ip: "192.168.100.101"
+        hostnames:
+        - "node01"
       containers:
       #
       # The slurmctld container
