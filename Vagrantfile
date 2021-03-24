@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
     head.vm.hostname = "head"
     head.vm.network :private_network, ip: "192.168.100.2"
     head.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
-    head.vm.provision "shell", path: "provision.sh"
+    head.vm.provision "shell", path: "provision-head.sh"
   end
 
   config.vm.define "fe1" do |fe1|
