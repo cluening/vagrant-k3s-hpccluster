@@ -64,7 +64,7 @@ buildah push --tls-verify=false localhost/munge 192.168.100.2:5000/munge
 
 # Copy the munge key into the shared directory so we can use it later on the compute nodes
 mkdir -p /home/vagrant/vagrant-k3s-hpccluster/configfiles/etc/munge
-cp /etc/munge/munge.key /home/vagrant/vagrant-k3s-hpccluster/configfiles/etc/munge
+cp -f /etc/munge/munge.key /home/vagrant/vagrant-k3s-hpccluster/configfiles/etc/munge
 
 # Enable and start munge
 systemctl enable munge
