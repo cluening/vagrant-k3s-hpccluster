@@ -45,6 +45,8 @@ spec:
           mountPath: "/run/munge"
         - name: var-lib-sss
           mountPath: "/var/lib/sss"
+        - name: var-spool
+          mountPath: "/var/spool"
       #
       # The munge container
       #
@@ -90,3 +92,6 @@ spec:
         emptyDir: {}
       - name: var-lib-sss
         emptyDir: {}
+      - name: var-spool
+        persistentVolumeClaim:
+          claimName: local-path-pvc
