@@ -23,6 +23,8 @@ Vagrant.configure("2") do |config|
     fe1.vm.box = "generic/centos8"
     fe1.vm.hostname = "fe1"
     fe1.vm.network :private_network, ip: "192.168.100.20"
+    fe1.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
+    fe1.vm.provision "shell", path: "provision-fe.sh"
   end
 
   (1..4).each do |i|

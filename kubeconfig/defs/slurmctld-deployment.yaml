@@ -43,6 +43,8 @@ spec:
           readOnly: true
         - name: run-munge
           mountPath: "/run/munge"
+        - name: var-lib-sss
+          mountPath: "/var/lib/sss"
       #
       # The munge container
       #
@@ -55,6 +57,20 @@ spec:
           readOnly: true
         - name: run-munge
           mountPath: "/run/munge"
+      #
+      # The sssd container
+      #
+      - name: sssd
+        image: 192.168.100.2:5000/sssd
+        #command: ['/sbin/init']
+        volumeMounts:
+        - name: sssd-conf
+          mountPath: "/etc/sssd/"
+          readOnly: true
+        - name: var-lib-sss
+          mountPath: "/var/lib/sss"
+        - name: etc-passwd-d
+          mountPath: "/etc/passwd.d"
       volumes:
       - name: slurm-conf
         configMap:
@@ -63,5 +79,14 @@ spec:
         secret:
           secretName: munge-key
           defaultMode: 0400
+      - name: sssd-conf
+        configMap:
+          name: sssd-conf
+          defaultMode: 0600
+      - name: etc-passwd-d
+        configMap:
+          name: etc-passwd-d
       - name: run-munge
+        emptyDir: {}
+      - name: var-lib-sss
         emptyDir: {}

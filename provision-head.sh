@@ -41,6 +41,14 @@ do
 done
 echo "Registry is ready!"
 
+# Build an sssd container and put it in the registry
+buildah build-using-dockerfile -t sssd /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/sssdcontainer
+buildah push --tls-verify=false localhost/sssd 192.168.100.2:5000/sssd
+
+# Create sssd configmaps for the configuration and the local account info
+/usr/local/bin/kubectl create configmap sssd-conf --from-file /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/sssdconfig/sssd.conf
+/usr/local/bin/kubectl create configmap etc-passwd-d --from-file /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/sssdconfig/local
+
 # Build slurm and munge containers and put them in the registry
 buildah build-using-dockerfile -t slurmctld /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/slurmcontainer/
 buildah push --tls-verify=false localhost/slurmctld 192.168.100.2:5000/slurmctld
