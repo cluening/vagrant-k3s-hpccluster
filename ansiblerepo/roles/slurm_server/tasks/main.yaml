@@ -1,0 +1,41 @@
+---
+- name: "Create the slurm.conf configmap"
+  community.kubernetes.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    definition: "{{ lookup('template', 'slurm-conf-configmap.yaml.j2') | from_yaml }}"
+    state: present
+
+- name: "Create a munge key"
+  ansible.builtin.shell: "dd if=/dev/urandom bs=1 count=1024 > {{ role_path }}/files/munge.key"
+  args:
+    creates: "{{ role_path }}/files/munge.key"
+
+- name: "Set permissions on the munge key in the repository"
+  file:
+    path: "{{ role_path }}/files/munge.key"
+    mode: 0400
+
+- name: "Create the munge key secret"
+  community.kubernetes.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    definition: "{{ lookup('template', 'munge-conf-secret.yaml.j2') | from_yaml }}"
+    state: present
+
+- name: "Enable and start munge"
+  ansible.builtin.service:
+    name: munge
+    enabled: yes
+    state: started
+
+- name: "Create the slurmctld deployment object"
+  community.kubernetes.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/slurmctld-deployment.yaml"
+    state: present
+
+- name: "Create the slurmctld service object"
+  community.kubernetes.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/slurmctld-service.yaml"
+    state: present
+

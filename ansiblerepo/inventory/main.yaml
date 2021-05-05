@@ -1,0 +1,14 @@
+all:
+  children:
+    cluster_heads:
+      hosts:
+        head:
+    cluster_frontends:
+      hosts:
+        fe1:
+    cluster_computes:
+      hosts:
+        node01:
+        node02:
+        node03:
+        node04:
