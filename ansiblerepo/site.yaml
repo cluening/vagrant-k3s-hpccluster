@@ -1,4 +1,5 @@
 ---
 - hosts: head
   roles:
+  - container_registry
   - slurm_server
