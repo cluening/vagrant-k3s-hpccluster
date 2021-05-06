@@ -9,6 +9,14 @@
     group: root
     mode: 0755
 
+- name: "Create the k3s config directory"
+  ansible.builtin.file:
+    path: /etc/rancher/k3s
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
 - name: "Copy the k3s registries config into place"
   ansible.builtin.template:
     src: registries.yaml.j2
