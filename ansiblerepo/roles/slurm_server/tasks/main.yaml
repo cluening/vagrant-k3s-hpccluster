@@ -1,4 +1,11 @@
 ---
+- name: "Install slurm and munge locally"
+  package:
+    name:
+      - munge
+      - slurm-ohpc
+    state: present
+
 - name: "Create the slurm.conf configmap"
   community.kubernetes.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
