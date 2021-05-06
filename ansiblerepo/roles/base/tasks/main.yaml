@@ -1,0 +1,13 @@
+---
+- name: "Install OpenHPC release package"
+  package:
+    name: http://repos.openhpc.community/OpenHPC/2/CentOS_8/x86_64/ohpc-release-2-1.el8.x86_64.rpm
+    state: present
+
+- name: "Install base prereqs"
+  package:
+    name:
+      - ansible
+      - buildah
+      - jq
+    state: present
