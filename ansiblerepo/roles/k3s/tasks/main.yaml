@@ -1,0 +1,13 @@
+---
+# FIXME: this series of tasks should be done in a more ansiblonic way, not just replicating "curl | bash"
+
+- name: "Download the k3s install script"
+  ansible.builtin.get_url:
+    url: https://get.k3s.io/
+    dest: /root/k3sinstall.sh
+    mode: 0755
+
+- name: "Run the k3s installer"
+  ansible.builtin.command: "/root/k3sinstall.sh server --bind-address 192.168.100.2 --advertise-address 192.168.100.2 --node-ip 192.168.100.2 --flannel-iface eth1 --token vagranthpc"
+  args:
+    creates: /usr/local/bin/k3s
