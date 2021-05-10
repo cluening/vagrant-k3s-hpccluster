@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chrony-conf
+  namespace: default
+data:
+  chrony.conf: |
+{{ lookup('template', 'chrony.conf.j2') | indent(width=4, first=true, blank=true) }}
