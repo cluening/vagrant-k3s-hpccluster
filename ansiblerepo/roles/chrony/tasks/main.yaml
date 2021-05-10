@@ -2,13 +2,15 @@
 - name: "Get container list"
   command: "buildah images --json"
   register: buildahoutput
+  changed_when: False
 
-- name: "Build the chrony container if it doesn't exist"
-  ansible.builtin.command: "buildah build-using-dockerfile -t chrony /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/chronycontainer/"
+- name: "Create the chrony container"
+  block:
+  - name: "Build the chrony container if it doesn't exist"
+    ansible.builtin.command: "buildah build-using-dockerfile -t chrony /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/chronycontainer/"  
+  - name: "Push the chrony container into the local registry"
+    ansible.builtin.command: "buildah push --tls-verify=false localhost/chrony 192.168.100.2:5000/chrony"
   when: "not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/chrony:latest`)')"
-
-- name: "Push the chrony container into the local registry"
-  ansible.builtin.command: "buildah push --tls-verify=false localhost/chrony 192.168.100.2:5000/chrony"
 
 - name: "Create the chrony.conf configmap"
   community.kubernetes.k8s:
