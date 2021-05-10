@@ -2,6 +2,8 @@
 - hosts: head
   roles:
   - base
+  - chrony
+  - sssd
   - k3s
   - container_registry
   - slurm_server
