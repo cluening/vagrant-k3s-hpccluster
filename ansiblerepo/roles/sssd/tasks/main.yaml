@@ -17,3 +17,9 @@
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'sssd-conf-configmap.yaml.j2') | from_yaml }}"
     state: present
+
+- name: "Create the passwd.d/local configmap"
+  community.kubernetes.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    definition: "{{ lookup('template', 'etc-passwd-d-configmap.yaml.j2') | from_yaml }}"
+    state: present
