@@ -11,3 +11,9 @@
       - buildah
       - jq
     state: present
+
+- name: "Disable firewall"
+  service:
+    name: firewalld
+    state: stopped
+    enabled: false
