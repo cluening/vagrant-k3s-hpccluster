@@ -1,9 +1,9 @@
 ---
 - hosts: head
   roles:
-  - base
-  - chrony
-  - sssd
-  - k3s
-  - container_registry
-  - slurm_server
+  - { role: base, tags: ['base'] }
+  - { role: chrony, tags: ['chrony'] }
+  - { role: sssd, tags: ['sssd'] }
+  - { role: k3s, tags: ['k3s'] }
+  - { role: container_registry, tags: ['container_registry'] }
+  - { role: slurm_server, tags: ['slurm_server'] }
