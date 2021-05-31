@@ -51,6 +51,14 @@
     definition: "{{ lookup('template', 'munge-conf-secret.yaml.j2') | from_yaml }}"
     state: present
 
+- name: "Install munge locally"
+  ansible.builtin.copy:
+    src: "munge.key"
+    dest: "/etc/munge/munge.key"
+    owner: munge
+    group: munge
+    mode: 0400
+
 - name: "Enable and start munge"
   ansible.builtin.service:
     name: munge
