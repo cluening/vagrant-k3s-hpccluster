@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: etc-passwd-d
+  namespace: default
+data:
+  local: |
+{{ lookup('template', 'local.j2') | indent(width=4, first=true, blank=true) }}
