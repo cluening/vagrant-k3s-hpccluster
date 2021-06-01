@@ -16,3 +16,8 @@
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     src: /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/docker-registry-service.yaml
     state: present
+
+- name: "Wait for registry service to start"
+  wait_for:
+    host: 192.168.100.2
+    port: 5000
