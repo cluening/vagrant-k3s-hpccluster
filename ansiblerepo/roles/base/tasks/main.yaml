@@ -12,6 +12,7 @@
       - buildah
       - jq
       - python3-libselinux
+      - python3-openshift
     state: present
 
 - name: "Disable firewall"
