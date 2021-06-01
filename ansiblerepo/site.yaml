@@ -6,4 +6,4 @@
   - { role: sssd, tags: ['sssd'] }
   - { role: k3s, tags: ['k3s'] }
   - { role: container_registry, tags: ['container_registry'] }
-  - { role: slurm_server, tags: ['slurm_server'] }
+  - { role: slurm, tags: ['slurm'] }
