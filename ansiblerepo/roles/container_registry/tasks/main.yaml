@@ -18,6 +18,9 @@
     state: present
 
 - name: "Wait for registry service to start"
-  wait_for:
-    host: 192.168.100.2
-    port: 5000
+  shell: /usr/local/bin/kubectl get pods -l app=docker-registry -o json | jq -r '.items[].status.phase // "NotCreated"'
+  register: _result
+  until: _result.stdout == "Running"
+  retries: 120
+  delay: 5
+  changed_when: false
