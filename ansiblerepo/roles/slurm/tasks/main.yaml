@@ -29,6 +29,12 @@
       - slurm-ohpc
     state: present
 
+- name: "Create the /etc/slurm directory"
+  file:
+    path: /etc/slurm
+    type: directory
+    mode: '0755'
+
 - name: "Install slurm.conf locally"
   template:
     src: "slurm.conf.j2"
