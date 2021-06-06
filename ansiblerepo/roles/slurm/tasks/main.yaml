@@ -29,6 +29,14 @@
       - slurm-ohpc
     state: present
 
+- name: "Install slurm.conf locally"
+  template:
+    src: "slurm.conf.j2"
+    dest: "/etc/slurm/slurm.conf"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: "Create the slurm.conf configmap"
   community.kubernetes.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
