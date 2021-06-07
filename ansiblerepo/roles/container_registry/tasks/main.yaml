@@ -2,19 +2,19 @@
 - name: "Create a local path PVC"
   community.kubernetes.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-    src: /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/local-path-pvc.yaml
+    definition: "{{ lookup('template', 'defs/local-path-pvc.yaml') | from_yaml }}"
     state: present
 
 - name: "Create a docker registry deployment"
   community.kubernetes.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-    src: /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/docker-registry-deployment.yaml
+    definition: "{{ lookup('template', 'defs/docker-registry-deployment.yaml') | from_yaml }}"
     state: present
 
 - name: "Create a docker registry service"
   community.kubernetes.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-    src: /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/docker-registry-service.yaml
+    definition: "{{ lookup('template', 'defs/docker-registry-service.yaml') | from_yaml }}"
     state: present
 
 - name: "Wait for registry service to start"
