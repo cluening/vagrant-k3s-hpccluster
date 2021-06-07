@@ -82,12 +82,12 @@
 - name: "Create the slurmctld deployment object"
   community.kubernetes.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-    src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/slurmctld-deployment.yaml"
+    definition: "{{ lookup('template', 'defs/slurmctld-deployment.yaml') | from_yaml }}"
     state: present
 
 - name: "Create the slurmctld service object"
   community.kubernetes.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-    src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/slurmctld-service.yaml"
+    definition: "{{ lookup('template', 'defs/slurmctld-service.yaml') | from_yaml }}"
     state: present
 
