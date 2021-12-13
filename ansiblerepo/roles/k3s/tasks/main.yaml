@@ -26,6 +26,6 @@
     mode: 0644
 
 - name: "Run the k3s installer"
-  ansible.builtin.command: "/root/k3sinstall.sh server --bind-address 192.168.100.2 --advertise-address 192.168.100.2 --node-ip 192.168.100.2 --flannel-iface eth1 --token vagranthpc"
+  ansible.builtin.command: "/root/k3sinstall.sh server --bind-address 192.168.56.2 --advertise-address 192.168.56.2 --node-ip 192.168.56.2 --flannel-iface eth1 --token vagranthpc"
   args:
     creates: /usr/local/bin/k3s

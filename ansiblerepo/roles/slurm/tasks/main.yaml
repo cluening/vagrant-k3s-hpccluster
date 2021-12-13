@@ -10,7 +10,7 @@
   - name: "Build the slurmctld container if it doesn't exist"
     ansible.builtin.command: "buildah build-using-dockerfile -t slurmctld /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/slurmcontainer/"
   - name: "Push the slurmctld container into the local registry"
-    ansible.builtin.command: "buildah push --tls-verify=false localhost/slurmctld 192.168.100.2:5000/slurmctld"
+    ansible.builtin.command: "buildah push --tls-verify=false localhost/slurmctld 192.168.56.2:5000/slurmctld"
   when: "not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/slurmctld:latest`)')"
 
 - name: "Create the munge container"
@@ -18,7 +18,7 @@
   - name: "Build the munge container if it doesn't exist"
     ansible.builtin.command: "buildah build-using-dockerfile -t munge /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/mungecontainer/"
   - name: "Push the munge container into the local registry"
-    ansible.builtin.command: "buildah push --tls-verify=false localhost/munge 192.168.100.2:5000/munge"
+    ansible.builtin.command: "buildah push --tls-verify=false localhost/munge 192.168.56.2:5000/munge"
   when: "not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/munge:latest`)')"
 
 ## Prepare local install

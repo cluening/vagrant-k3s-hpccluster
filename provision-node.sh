@@ -21,7 +21,7 @@ systemctl start munge
 # Set up slurmd
 mkdir -p /etc/slurm
 cp /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/slurmconfig/slurm.conf /etc/slurm/
-echo "192.168.100.2 slurm" >> /etc/hosts
+echo "192.168.56.2 slurm" >> /etc/hosts
 
 # Enable and start slurmd
 systemctl enable slurmd
