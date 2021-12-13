@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "head" do |head|
     head.vm.box = "generic/centos8"
     head.vm.hostname = "head"
-    head.vm.network :private_network, ip: "192.168.100.2"
+    head.vm.network :private_network, ip: "192.168.56.2"
     head.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
     head.vm.provision "shell", path: "provision-head.sh"
   end
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "fe1" do |fe1|
     fe1.vm.box = "generic/centos8"
     fe1.vm.hostname = "fe1"
-    fe1.vm.network :private_network, ip: "192.168.100.20"
+    fe1.vm.network :private_network, ip: "192.168.56.20"
     fe1.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
     fe1.vm.provision "shell", path: "provision-fe.sh"
   end
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
     config.vm.define "node0#{i}" do |node|
       node.vm.box = "generic/centos8"
       node.vm.hostname = "node0#{i}"
-      node.vm.network :private_network, ip: "192.168.100.#{100+i}"
+      node.vm.network :private_network, ip: "192.168.56.#{100+i}"
       node.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
       node.vm.provision "shell", path: "provision-node.sh"
     end
