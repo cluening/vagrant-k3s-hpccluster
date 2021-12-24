@@ -1,18 +1,18 @@
 ---
 - name: "Create a local path PVC"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'defs/local-path-pvc.yaml') | from_yaml }}"
     state: present
 
 - name: "Create a docker registry deployment"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'defs/docker-registry-deployment.yaml') | from_yaml }}"
     state: present
 
 - name: "Create a docker registry service"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'defs/docker-registry-service.yaml') | from_yaml }}"
     state: present

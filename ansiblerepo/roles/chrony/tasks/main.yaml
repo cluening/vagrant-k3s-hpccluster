@@ -13,19 +13,19 @@
   when: "not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/chrony:latest`)')"
 
 - name: "Create the chrony.conf configmap"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'chrony-conf-configmap.yaml.j2') | from_yaml }}"
     state: present
 
 - name: "Create the chronyd deployment object"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/chronyd-deployment.yaml"
     state: present
 
 - name: "Create the chronyd service object"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/chronyd-service.yaml"
     state: present

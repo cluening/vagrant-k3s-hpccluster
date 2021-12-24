@@ -44,7 +44,7 @@
     mode: 0644
 
 - name: "Create the slurm.conf configmap"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'slurm-conf-configmap.yaml.j2') | from_yaml }}"
     state: present
@@ -60,7 +60,7 @@
     mode: 0400
 
 - name: "Create the munge key secret"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'munge-conf-secret.yaml.j2') | from_yaml }}"
     state: present
@@ -80,13 +80,13 @@
     state: started
 
 - name: "Create the slurmctld deployment object"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'defs/slurmctld-deployment.yaml') | from_yaml }}"
     state: present
 
 - name: "Create the slurmctld service object"
-  community.kubernetes.k8s:
+  kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'defs/slurmctld-service.yaml') | from_yaml }}"
     state: present
