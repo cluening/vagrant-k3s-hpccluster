@@ -4,6 +4,7 @@
   command: "buildah images --json"
   register: buildahoutput
   changed_when: False
+  when: enable_slurm_server is true
 
 - name: "Create the slurmctld container"
   block:
@@ -11,7 +12,9 @@
     ansible.builtin.command: "buildah build-using-dockerfile -t slurmctld /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/slurmcontainer/"
   - name: "Push the slurmctld container into the local registry"
     ansible.builtin.command: "buildah push --tls-verify=false localhost/slurmctld 192.168.56.2:5000/slurmctld"
-  when: "not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/slurmctld:latest`)')"
+  when:
+    - enable_slurm_server is true
+    - not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/slurmctld:latest`)')
 
 - name: "Create the munge container"
   block:
@@ -19,7 +22,9 @@
     ansible.builtin.command: "buildah build-using-dockerfile -t munge /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/mungecontainer/"
   - name: "Push the munge container into the local registry"
     ansible.builtin.command: "buildah push --tls-verify=false localhost/munge 192.168.56.2:5000/munge"
-  when: "not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/munge:latest`)')"
+  when:
+    - enable_slurm_server is true
+    - not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/munge:latest`)')
 
 ## Prepare local install
 - name: "Install slurm and munge locally"
@@ -48,6 +53,7 @@
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'slurm-conf-configmap.yaml.j2') | from_yaml }}"
     state: present
+  when: enable_slurm_server is true
 
 - name: "Create a munge key"
   ansible.builtin.shell: "dd if=/dev/urandom bs=1 count=1024 > {{ role_path }}/files/munge.key"
@@ -64,8 +70,10 @@
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'munge-conf-secret.yaml.j2') | from_yaml }}"
     state: present
+  when: enable_slurm_server is true
 
-- name: "Install munge locally"
+# FIXME: this should have a handler to restart munge if it changes
+- name: "Install munge key"
   ansible.builtin.copy:
     src: "munge.key"
     dest: "/etc/munge/munge.key"
@@ -84,10 +92,11 @@
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'defs/slurmctld-deployment.yaml') | from_yaml }}"
     state: present
+  when: enable_slurm_server is true
 
 - name: "Create the slurmctld service object"
   kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
     definition: "{{ lookup('template', 'defs/slurmctld-service.yaml') | from_yaml }}"
     state: present
-
+  when: enable_slurm_server is true

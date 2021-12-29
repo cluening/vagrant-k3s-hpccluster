@@ -10,4 +10,5 @@ ansible-playbook \
   -e ansible_python_interpreter=$(which python) \
   -i /home/vagrant/vagrant-k3s-hpccluster/ansiblerepo/inventory \
   -c local \
+  -l $(hostname) \
   /home/vagrant/vagrant-k3s-hpccluster/ansiblerepo/site.yaml

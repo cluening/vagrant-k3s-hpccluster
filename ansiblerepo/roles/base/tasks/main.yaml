@@ -12,6 +12,7 @@
       - jq
     state: present
 
+# FIXME: some of these are only needed on the head node
 - name: "Install base python packages"
   pip:
     name:

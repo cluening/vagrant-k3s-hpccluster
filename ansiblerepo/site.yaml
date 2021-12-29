@@ -1,9 +1,14 @@
 ---
-- hosts: head
+- hosts: cluster_heads
   roles:
   - { role: base, tags: ['base'] }
   - { role: k3s, tags: ['k3s'] }
   - { role: container_registry, tags: ['container_registry'] }
   - { role: chrony, tags: ['chrony'] }
   - { role: sssd, tags: ['sssd'] }
+  - { role: slurm, tags: ['slurm'] }
+
+- hosts: cluster_computes
+  roles:
+  - { role: base, tags: ['base'] }
   - { role: slurm, tags: ['slurm'] }
