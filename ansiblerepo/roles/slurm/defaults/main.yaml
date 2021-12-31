@@ -1,1 +1,2 @@
 enable_slurm_server: false
+enable_slurm_client: false

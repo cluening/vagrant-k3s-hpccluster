@@ -34,6 +34,13 @@
       - slurm-ohpc
     state: present
 
+- name: "Install slurmd"
+  package:
+    name:
+      - slurm-slurmd-ohpc
+    state: present
+  when: enable_slurm_client is true
+
 - name: "Create the /etc/slurm directory"
   file:
     path: /etc/slurm
@@ -86,6 +93,13 @@
     name: munge
     enabled: yes
     state: started
+
+- name: "Enable and start slurmd"
+  ansible.builtin.service:
+    name: slurmd
+    enabled: yes
+    state: started
+  when: enable_slurm_client is true
 
 - name: "Create the slurmctld deployment object"
   kubernetes.core.k8s:
