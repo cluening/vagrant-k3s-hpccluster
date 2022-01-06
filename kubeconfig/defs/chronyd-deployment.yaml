@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: chronyd
+  namespace: default
   labels:
     app: chronyd
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: chronyd
-        image: 192.168.100.2:5000/chrony
+        image: 192.168.56.2:5000/chrony
         ports:
         - containerPort: 123
           protocol: UDP

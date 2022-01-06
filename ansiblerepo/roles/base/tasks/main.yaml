@@ -1,0 +1,43 @@
+---
+- name: "Install OpenHPC release package"
+  package:
+    name: http://repos.openhpc.community/OpenHPC/2/CentOS_8/x86_64/ohpc-release-2-1.el8.x86_64.rpm
+    disable_gpg_check: true
+    state: present
+
+- name: "Install base prereqs"
+  package:
+    name:
+      - buildah
+      - jq
+    state: present
+
+# FIXME: some of these are only needed on the head node
+- name: "Install base python packages"
+  pip:
+    name:
+      - kubernetes
+      - selinux
+      - jmespath
+
+- name: "Disable firewall"
+  service:
+    name: firewalld
+    state: stopped
+    enabled: false
+
+- name: "Disable selinux"
+  selinux:
+    state: "disabled"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Add cluster nodes to /etc/hosts
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      192.168.56.2 slurm
+      192.168.56.101	node01
+      192.168.56.102	node02
+      192.168.56.103	node03
+      192.168.56.104	node04
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"

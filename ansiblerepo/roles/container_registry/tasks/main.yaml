@@ -1,0 +1,26 @@
+---
+- name: "Create a local path PVC"
+  kubernetes.core.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    definition: "{{ lookup('template', 'defs/local-path-pvc.yaml') | from_yaml }}"
+    state: present
+
+- name: "Create a docker registry deployment"
+  kubernetes.core.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    definition: "{{ lookup('template', 'defs/docker-registry-deployment.yaml') | from_yaml }}"
+    state: present
+
+- name: "Create a docker registry service"
+  kubernetes.core.k8s:
+    kubeconfig: "/etc/rancher/k3s/k3s.yaml"
+    definition: "{{ lookup('template', 'defs/docker-registry-service.yaml') | from_yaml }}"
+    state: present
+
+- name: "Wait for registry service to start"
+  shell: /usr/local/bin/kubectl get pods -l app=docker-registry -o json | jq -r '.items[].status.phase // "NotCreated"'
+  register: _result
+  until: _result.stdout == "Running"
+  retries: 120
+  delay: 5
+  changed_when: false

@@ -1,0 +1,31 @@
+---
+# FIXME: this series of tasks should be done in a more ansiblonic way, not just replicating "curl | bash"
+
+- name: "Download the k3s install script"
+  ansible.builtin.get_url:
+    url: https://get.k3s.io/
+    dest: /root/k3sinstall.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: "Create the k3s config directory"
+  ansible.builtin.file:
+    path: /etc/rancher/k3s
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: "Copy the k3s registries config into place"
+  ansible.builtin.template:
+    src: registries.yaml.j2
+    dest: /etc/rancher/k3s/registries.yaml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Run the k3s installer"
+  ansible.builtin.command: "/root/k3sinstall.sh server --bind-address 192.168.56.2 --advertise-address 192.168.56.2 --node-ip 192.168.56.2 --flannel-iface eth1 --token {{ k3s_token }}"
+  args:
+    creates: /usr/local/bin/k3s

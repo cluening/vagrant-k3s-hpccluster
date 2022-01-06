@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: slurmctld-deployment
+  namespace: default
   labels:
     app: slurmctld
 spec:
@@ -16,16 +17,16 @@ spec:
     spec:
       hostname: slurm
       hostAliases:
-      - ip: "192.168.100.101"
+      - ip: "192.168.56.101"
         hostnames:
         - "node01"
-      - ip: "192.168.100.102"
+      - ip: "192.168.56.102"
         hostnames:
         - "node02"
-      - ip: "192.168.100.103"
+      - ip: "192.168.56.103"
         hostnames:
         - "node03"
-      - ip: "192.168.100.104"
+      - ip: "192.168.56.104"
         hostnames:
         - "node04"
       containers:
@@ -33,7 +34,7 @@ spec:
       # The slurmctld container
       #
       - name: slurmctld
-        image: 192.168.100.2:5000/slurmctld
+        image: 192.168.56.2:5000/slurmctld
         #command: ['/sbin/init']
         ports:
         - containerPort: 6817
@@ -51,7 +52,7 @@ spec:
       # The munge container
       #
       - name: munge
-        image: 192.168.100.2:5000/munge
+        image: 192.168.56.2:5000/munge
         #command: ['/sbin/init']
         volumeMounts:
         - name: munge-key
@@ -63,7 +64,7 @@ spec:
       # The sssd container
       #
       - name: sssd
-        image: 192.168.100.2:5000/sssd
+        image: 192.168.56.2:5000/sssd
         #command: ['/sbin/init']
         volumeMounts:
         - name: sssd-conf

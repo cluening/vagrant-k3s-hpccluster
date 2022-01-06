@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: slurm-conf
+  namespace: default
+data:
+  slurm.conf: |
+{{ lookup('template', 'slurm.conf.j2') | indent(width=4, first=true, blank=true) }}
