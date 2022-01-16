@@ -21,13 +21,11 @@
 - name: "Create the chronyd deployment object"
   kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
- #   src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/chronyd-deployment.yaml"
     definition: "{{ lookup('template', 'defs/chronyd-deployment.yaml') | from_yaml }}"
     state: present
 
 - name: "Create the chronyd service object"
   kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-#    src: "/home/vagrant/vagrant-k3s-hpccluster/kubeconfig/defs/chronyd-service.yaml"
     definition: "{{ lookup('template', 'defs/chronyd-service.yaml') | from_yaml }}"
     state: present
