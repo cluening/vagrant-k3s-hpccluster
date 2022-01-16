@@ -9,7 +9,7 @@
 - name: "Create the slurmctld container"
   block:
   - name: "Build the slurmctld container if it doesn't exist"
-    ansible.builtin.command: "buildah build-using-dockerfile -t slurmctld /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/slurmcontainer/"
+    ansible.builtin.command: "buildah build-using-dockerfile -t slurmctld {{ role_path }}/containers/slurmcontainer/"
   - name: "Push the slurmctld container into the local registry"
     ansible.builtin.command: "buildah push --tls-verify=false localhost/slurmctld 192.168.56.2:5000/slurmctld"
   when:
@@ -19,7 +19,7 @@
 - name: "Create the munge container"
   block:
   - name: "Build the munge container if it doesn't exist"
-    ansible.builtin.command: "buildah build-using-dockerfile -t munge /home/vagrant/vagrant-k3s-hpccluster/kubeconfig/mungecontainer/"
+    ansible.builtin.command: "buildah build-using-dockerfile -t munge {{ role_path }}/containers/mungecontainer/"
   - name: "Push the munge container into the local registry"
     ansible.builtin.command: "buildah push --tls-verify=false localhost/munge 192.168.56.2:5000/munge"
   when:
