@@ -1,0 +1,12 @@
+---
+- name: "Install slurmd"
+  package:
+    name:
+      - slurm-slurmd-ohpc
+    state: present
+
+- name: "Enable and start slurmd"
+  ansible.builtin.service:
+    name: slurmd
+    enabled: yes
+    state: started
