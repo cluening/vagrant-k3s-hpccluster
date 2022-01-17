@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
     head.vm.hostname = "head"
     head.vm.network :private_network, ip: "192.168.56.2"
     head.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
-    head.vm.provision "shell", path: "provision-head.sh"
+    head.vm.provision "shell", path: "provision.sh"
   end
 
   config.vm.define "fe1" do |fe1|
@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     fe1.vm.hostname = "fe1"
     fe1.vm.network :private_network, ip: "192.168.56.20"
     fe1.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
-    fe1.vm.provision "shell", path: "provision-fe.sh"
+    fe1.vm.provision "shell", path: "provision.sh"
   end
 
   (1..4).each do |i|
@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "node0#{i}"
       node.vm.network :private_network, ip: "192.168.56.#{100+i}"
       node.vm.synced_folder "./", "/home/vagrant/vagrant-k3s-hpccluster"
-      node.vm.provision "shell", path: "provision-node.sh"
+      node.vm.provision "shell", path: "provision.sh"
     end
   end
 
