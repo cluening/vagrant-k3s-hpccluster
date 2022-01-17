@@ -4,7 +4,6 @@
   command: "buildah images --json"
   register: buildahoutput
   changed_when: False
-#  when: enable_slurm_server is true
 
 - name: "Create the slurmctld container"
   block:
@@ -13,7 +12,6 @@
   - name: "Push the slurmctld container into the local registry"
     ansible.builtin.command: "buildah push --tls-verify=false localhost/slurmctld 192.168.56.2:5000/slurmctld"
   when:
-#    - enable_slurm_server is true
     - not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/slurmctld:latest`)')
 
 - name: "Create the munge container"
