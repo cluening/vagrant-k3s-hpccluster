@@ -19,9 +19,4 @@ This repositry will stand up a simple vagrant-based HPC cluster that can run job
 
 ## More details
 
-Take a look at `provision-*.sh` to see what's actually being done.
-
-
-## Todo
-
-- Replace all of the shell scripts with Ansible
+Take a look at the Ansible repository to see what's actually happening.
