@@ -11,9 +11,11 @@
 - hosts: cluster_computes
   roles:
   - { role: base, tags: ['base'] }
+  - { role: chrony, tags: ['chrony'] }
   - { role: slurm, tags: ['slurm'] }
 
 - hosts: cluster_frontends
   roles:
   - { role: base, tags: ['base'] }
+  - { role: chrony, tags: ['chrony'] }
   - { role: slurm, tags: ['slurm'] }

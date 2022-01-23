@@ -1,1 +1,2 @@
 enable_slurm_server: true
+enable_chrony_server: true
