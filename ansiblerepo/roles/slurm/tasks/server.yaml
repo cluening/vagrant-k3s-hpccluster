@@ -38,11 +38,11 @@
 - name: "Create the slurmctld deployment object"
   kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-    definition: "{{ lookup('template', 'defs/slurmctld-deployment.yaml') | from_yaml }}"
+    definition: "{{ lookup('template', 'defs/slurmctld-deployment.yaml.j2') | from_yaml }}"
     state: present
 
 - name: "Create the slurmctld service object"
   kubernetes.core.k8s:
     kubeconfig: "/etc/rancher/k3s/k3s.yaml"
-    definition: "{{ lookup('template', 'defs/slurmctld-service.yaml') | from_yaml }}"
+    definition: "{{ lookup('template', 'defs/slurmctld-service.yaml.j2') | from_yaml }}"
     state: present
