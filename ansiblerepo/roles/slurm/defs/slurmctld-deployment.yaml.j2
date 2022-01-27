@@ -17,18 +17,11 @@ spec:
     spec:
       hostname: slurm
       hostAliases:
-      - ip: "192.168.56.101"
+{% for i in range(0, 4) %}
+      - ip: "192.168.56.{{ 100 + i + 1 }}"
         hostnames:
-        - "node01"
-      - ip: "192.168.56.102"
-        hostnames:
-        - "node02"
-      - ip: "192.168.56.103"
-        hostnames:
-        - "node03"
-      - ip: "192.168.56.104"
-        hostnames:
-        - "node04"
+        - "node{{ "{:02}".format(i + 1) }}"
+{% endfor %}
       containers:
       #
       # The slurmctld container
