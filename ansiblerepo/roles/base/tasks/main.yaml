@@ -16,9 +16,10 @@
 - name: "Install base python packages"
   pip:
     name:
-      - kubernetes
-      - selinux
       - jmespath
+      - kubernetes
+      - netaddr
+      - selinux
 
 - name: "Disable firewall"
   service:
