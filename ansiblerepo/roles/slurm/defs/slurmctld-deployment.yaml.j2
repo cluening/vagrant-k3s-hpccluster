@@ -17,10 +17,10 @@ spec:
     spec:
       hostname: slurm
       hostAliases:
-{% for i in range(1, 5) %}
-      - ip: {{ "192.168.56.0/21" | ansible.netcommon.nthhost(100 + i) }}
+{% for node in groups["cluster_computes"] %}
+      - ip: {{ hostvars[node]["netconfig"]["ipv4_address"] }}
         hostnames:
-        - "node{{ "{:02}".format(i) }}"
+        - {{ node }}
 {% endfor %}
       containers:
       #
