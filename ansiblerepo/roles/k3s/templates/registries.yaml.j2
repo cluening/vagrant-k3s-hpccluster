@@ -1,4 +1,4 @@
 mirrors:
-  "192.168.56.2:5000":
+  "{{ hostvars['head']['netconfig']['ipv4_address'] }}:5000":
     endpoint:
-      - "http://192.168.56.2:5000"
+      - "http://{{ hostvars['head']['netconfig']['ipv4_address'] }}:5000"
