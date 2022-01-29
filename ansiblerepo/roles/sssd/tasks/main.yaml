@@ -9,7 +9,7 @@
   - name: "Build the sssd container"
     ansible.builtin.command: "buildah build-using-dockerfile -t sssd {{ role_path }}/containers/sssdcontainer"
   - name: "Push the sssd container into the local registry"
-    ansible.builtin.command: "buildah push --tls-verify=false localhost/sssd 192.168.56.2:5000/sssd"
+    ansible.builtin.command: "buildah push --tls-verify=false localhost/sssd {{ hostvars['head']['netconfig']['ipv4_address'] }}:5000/sssd"
   when: "not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/sssd:latest`)')"
 
 - name: "Create the sssd.conf configmap"
