@@ -27,7 +27,7 @@ spec:
       # The slurmctld container
       #
       - name: slurmctld
-        image: 192.168.56.2:5000/slurmctld
+        image: {{ hostvars["head"]["netconfig"]["ipv4_address"] }}:5000/slurmctld
         #command: ['/sbin/init']
         ports:
         - containerPort: 6817
@@ -45,7 +45,7 @@ spec:
       # The munge container
       #
       - name: munge
-        image: 192.168.56.2:5000/munge
+        image: {{ hostvars["head"]["netconfig"]["ipv4_address"] }}:5000/munge
         #command: ['/sbin/init']
         volumeMounts:
         - name: munge-key
@@ -57,7 +57,7 @@ spec:
       # The sssd container
       #
       - name: sssd
-        image: 192.168.56.2:5000/sssd
+        image: {{ hostvars["head"]["netconfig"]["ipv4_address"] }}:5000/sssd
         #command: ['/sbin/init']
         volumeMounts:
         - name: sssd-conf
