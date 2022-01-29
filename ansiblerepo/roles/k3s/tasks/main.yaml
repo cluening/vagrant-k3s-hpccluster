@@ -26,6 +26,6 @@
     mode: 0644
 
 - name: "Run the k3s installer"
-  ansible.builtin.command: "/root/k3sinstall.sh server --bind-address 192.168.56.2 --advertise-address 192.168.56.2 --node-ip 192.168.56.2 --flannel-iface eth1 --token {{ k3s_token }}"
+  ansible.builtin.command: "/root/k3sinstall.sh server --bind-address {{ hostvars['head']['netconfig']['ipv4_address'] }} --advertise-address {{ hostvars['head']['netconfig']['ipv4_address'] }} --node-ip {{ hostvars['head']['netconfig']['ipv4_address'] }} --flannel-iface eth1 --token {{ k3s_token }}"
   args:
     creates: /usr/local/bin/k3s
