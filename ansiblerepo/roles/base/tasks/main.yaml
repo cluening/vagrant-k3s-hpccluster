@@ -32,13 +32,17 @@
     state: "disabled"
   ignore_errors: "{{ ansible_check_mode }}"
 
+- name: Add slurm alias to /etc/hosts
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      {{ hostvars["head"]["netconfig"]["ipv4_address"] }} slurm
+    marker: "# {mark} ANSIBLE MANAGED BLOCK slurm"
+
 - name: Add cluster nodes to /etc/hosts
   blockinfile:
     path: /etc/hosts
     block: |
-      192.168.56.2 slurm
-      192.168.56.101	node01
-      192.168.56.102	node02
-      192.168.56.103	node03
-      192.168.56.104	node04
-    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+      {{ hostvars[item]["netconfig"]["ipv4_address"] }} {{ item }}
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item }}"
+  loop: "{{ groups['all'] }}"
