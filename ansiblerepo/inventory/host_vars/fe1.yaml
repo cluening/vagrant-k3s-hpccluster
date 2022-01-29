@@ -1,0 +1,2 @@
+netconfig:
+  ipv4_address: '{{ global_netconfig["network"] | ansible.netcommon.nthhost(global_netconfig["fe_offset"] + 1) }}'
