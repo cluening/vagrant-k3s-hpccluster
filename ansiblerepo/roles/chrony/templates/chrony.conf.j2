@@ -4,11 +4,11 @@
 pool 2.centos.pool.ntp.org iburst
 
 # Serve time to the rest of the cluster
-allow 192.168.56.0/24
+allow {{ global_netconfig["network"] }}
 {% endif %}
 {% if enable_chrony_client is true %}
 # Get time from the k8s service
-server 192.168.56.2
+server {{ hostvars["head"]["netconfig"]["ipv4_address"] }}
 {% endif %}
 
 # Record the rate at which the system clock gains/losses time.
