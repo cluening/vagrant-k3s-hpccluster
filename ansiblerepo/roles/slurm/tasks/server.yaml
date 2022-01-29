@@ -10,7 +10,7 @@
   - name: "Build the slurmctld container"
     ansible.builtin.command: "buildah build-using-dockerfile -t slurmctld {{ role_path }}/containers/slurmcontainer/"
   - name: "Push the slurmctld container into the local registry"
-    ansible.builtin.command: "buildah push --tls-verify=false localhost/slurmctld 192.168.56.2:5000/slurmctld"
+    ansible.builtin.command: "buildah push --tls-verify=false localhost/slurmctld {{ hostvars['head']['netconfig']['ipv4_address'] }}:5000/slurmctld"
   when:
     - not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/slurmctld:latest`)')
 
@@ -19,7 +19,7 @@
   - name: "Build the munge container"
     ansible.builtin.command: "buildah build-using-dockerfile -t munge {{ role_path }}/containers/mungecontainer/"
   - name: "Push the munge container into the local registry"
-    ansible.builtin.command: "buildah push --tls-verify=false localhost/munge 192.168.56.2:5000/munge"
+    ansible.builtin.command: "buildah push --tls-verify=false localhost/munge {{ hostvars['head']['netconfig']['ipv4_address'] }}:5000/munge"
   when:
     - not buildahoutput.stdout | from_json | json_query('contains([].names[], `localhost/munge:latest`)')
 
